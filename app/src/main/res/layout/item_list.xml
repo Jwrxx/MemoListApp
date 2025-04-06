@@ -46,7 +46,7 @@
         app:layout_constraintStart_toEndOf="@+id/editDate" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -68,7 +68,7 @@
         android:inputType="date"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/textDate" />
 
     <TextView
         android:id="@+id/textView6"
