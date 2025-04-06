@@ -22,7 +22,7 @@ public class MemoDataSource {
         dbHelper.close();
     }
 
-    public boolean insertReminder(Memo r) {
+    public boolean insertMemo(Memo r) {
         boolean didSucceed = false;
         try{
             ContentValues initialValues = new ContentValues();
@@ -39,7 +39,7 @@ public class MemoDataSource {
         return didSucceed;
     }
 
-    public boolean updateReminder(Memo r) {
+    public boolean updateMemo(Memo r) {
         boolean didSucceed = false;
         try{
             Long rowId = (long) r.getMemoID();
