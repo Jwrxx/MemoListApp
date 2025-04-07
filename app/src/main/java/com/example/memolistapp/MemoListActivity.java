@@ -19,12 +19,12 @@ public class MemoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
+        setContentView(R.layout.activity_list);
         initListButton();
         initSettingsButton();
         //initSwipeToDelete();
 
-        setContentView(R.layout.activity_list);
+        //setContentView(R.layout.activity_list);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -37,7 +37,6 @@ public class MemoListActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start the MemoListActivity when the button is clicked
                 Intent intent = new Intent(MemoListActivity.this, MemoListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -50,13 +49,24 @@ public class MemoListActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Start the MemoSettingsActivity when the button is clicked
                 Intent intent = new Intent(MemoListActivity.this, MemoSettingsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
     }
+
+//    private void initMemoButton() {
+//        ImageButton newMemo = findViewById(R.id.newMemoButton);
+//        newMemo.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(MemoListActivity.this,MainActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 }
 
     /*private void initSwipeToDelete(){
