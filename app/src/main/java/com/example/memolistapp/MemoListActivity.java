@@ -3,6 +3,7 @@ package com.example.memolistapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,7 @@ public class MemoListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         initListButton();
         initSettingsButton();
+        initMemoButton();
         //initSwipeToDelete();
 
         //setContentView(R.layout.activity_list);
@@ -56,17 +58,17 @@ public class MemoListActivity extends AppCompatActivity {
         });
     }
 
-//    private void initMemoButton() {
-//        ImageButton newMemo = findViewById(R.id.newMemoButton);
-//        newMemo.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Intent intent = new Intent(MemoListActivity.this,MainActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        });
-//    }
+    private void initMemoButton() {
+        Button newMemo = findViewById(R.id.newMemoButton);
+        newMemo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MemoListActivity.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
 }
 
     /*private void initSwipeToDelete(){
