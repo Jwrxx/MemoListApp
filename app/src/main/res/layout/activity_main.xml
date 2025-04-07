@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
 
     <EditText
-        android:id="@+id/reminderEdit"
+        android:id="@+id/editMemo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/noteEdit"
+        android:id="@+id/editNote"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="70dp"
@@ -91,7 +91,7 @@
         android:padding="12dp"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reminderEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/editMemo" />
 
     <TextView
         android:id="@+id/textView3"
@@ -102,7 +102,7 @@
         android:text="Priority:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/editNote" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -156,8 +156,8 @@
         android:id="@+id/editDate"
         android:layout_width="181dp"
         android:layout_height="43dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:inputType="date"
         android:textSize="18sp"

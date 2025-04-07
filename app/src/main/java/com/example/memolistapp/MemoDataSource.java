@@ -15,16 +15,18 @@ public class MemoDataSource {
     public MemoDataSource(Context context) {
         dbHelper = new MemoDBHelper(context);
     }
+
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
+
     public void close() {
         dbHelper.close();
     }
 
     public boolean insertMemo(Memo r) {
         boolean didSucceed = false;
-        try{
+        try {
             ContentValues initialValues = new ContentValues();
 
 
@@ -32,7 +34,7 @@ public class MemoDataSource {
             initialValues.put("note", r.getNote());
             initialValues.put("date", String.valueOf(r.getDate().getTimeInMillis()));
 
-            didSucceed = database.insert("reminder",null, initialValues) > 0;
+            didSucceed = database.insert("reminder", null, initialValues) > 0;
         } catch (Exception e) {
 
         }
@@ -41,7 +43,7 @@ public class MemoDataSource {
 
     public boolean updateMemo(Memo r) {
         boolean didSucceed = false;
-        try{
+        try {
             Long rowId = (long) r.getMemoID();
             ContentValues updateValues = new ContentValues();
 
@@ -50,26 +52,27 @@ public class MemoDataSource {
             updateValues.put("date", String.valueOf(r.getDate().getTimeInMillis()));
 
             didSucceed = database.update
-                    ("memo", updateValues, "_id=" + rowId, null)>0;
+                    ("memo", updateValues, "_id=" + rowId, null) > 0;
         } catch (Exception e) {
 
         }
         return didSucceed;
     }
 
-}
-//    public int getLastMemoID() {
-//        int lastId;
-//        try {
-//            String query = "SELECT MAX(_id) FROM memo";
-//            Cursor cursor = database.rawQuery(query, null);
-//
-//            cursor.moveToFirst();
-//            lastId = cursor.getInt(0);
-//            cursor.close();
-//        } catch (Exception e) {
-//            lastId = -1;
-//        }
-//        return lastId;
-//    }
 
+    public int getLastMemoID() {
+        int lastId;
+        try {
+            String query = "SELECT MAX(_id) FROM memo";
+            Cursor cursor = database.rawQuery(query, null);
+
+            cursor.moveToFirst();
+            lastId = cursor.getInt(0);
+            cursor.close();
+        } catch (Exception e) {
+            lastId = -1;
+        }
+        return lastId;
+    }
+
+}
