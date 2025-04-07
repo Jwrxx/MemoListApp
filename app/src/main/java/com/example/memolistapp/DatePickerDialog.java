@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
+
+import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class DatePickerDialog {
+public class DatePickerDialog extends DialogFragment {
     Calendar selectedDate;
     public interface SaveDateListener {
         void didFinishDatePickerDialog(Calendar selectedTime);

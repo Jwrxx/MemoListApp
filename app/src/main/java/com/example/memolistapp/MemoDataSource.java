@@ -50,7 +50,7 @@ public class MemoDataSource {
             updateValues.put("date", String.valueOf(r.getDate().getTimeInMillis()));
 
             didSucceed = database.update
-                    ("reminder", updateValues, "_id=" + rowId, null)>0;
+                    ("memo", updateValues, "_id=" + rowId, null)>0;
         } catch (Exception e) {
 
         }

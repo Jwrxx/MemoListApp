@@ -26,7 +26,7 @@ public class MemoDBHelper extends SQLiteOpenHelper {
         Log.w(MemoDBHelper.class.getName(),
                 "Upgrading database from version" + oldVersion + "to"
                         + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS reminder");
+        db.execSQL("DROP TABLE IF EXISTS memo");
         onCreate(db);
     }
 }
