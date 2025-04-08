@@ -107,28 +107,6 @@ public class MemoDataSource {
         }
         return memos;
     }
-    public Memo getMemo(int memoID) {
-        Memo memo = null;
-        try {
-            String query = "SELECT * FROM memo WHERE _id = ?";
-            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(memoID)});
-
-            if (cursor.moveToFirst()) {
-                memo = new Memo();
-                memo.setMemoID(cursor.getInt(0));
-                memo.setSubject(cursor.getString(1));
-                memo.setNote(cursor.getString(2));
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(Long.parseLong(cursor.getString(3)));
-                memo.setDate(calendar);
-            }
-            cursor.close();
-        } catch (Exception e) {
-            memo = null;
-        }
-        return memo;
-    }
 
     public Memo getMemo(int memoID) {
         Memo memo = null;

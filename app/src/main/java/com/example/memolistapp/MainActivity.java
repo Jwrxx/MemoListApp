@@ -34,6 +34,22 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+
+        Intent intent = getIntent();
+        String subject = intent.getStringExtra("subject");
+        String note = intent.getStringExtra("note");
+        String priority = intent.getStringExtra("priority");
+        String date = intent.getStringExtra("date");
+
+
+        EditText subjectEditText = findViewById(R.id.editMemo);
+        EditText noteEditText = findViewById(R.id.editNote);
+        RadioGroup priorityRadioGroup = findViewById(R.id.radioGroup);
+        TextView dateTextView = findViewById(R.id.editDate);
+
+        subjectEditText.setText(subject);
+        noteEditText.setText(note);
+
         if (currentMemo == null) {
             currentMemo = new Memo(); // Or retrieve an existing memo if needed
         }

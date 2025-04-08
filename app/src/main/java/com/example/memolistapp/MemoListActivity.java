@@ -31,11 +31,22 @@ public class MemoListActivity extends AppCompatActivity {
         public void onClick(View view) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
-            int memoId = memos.get(position).getMemoID();
+            Memo selectedMemo = memos.get(position);
 
-            //MemoID to main
+            // Get details of the selected memo
+            String memoSubject = selectedMemo.getSubject();
+            String memoNote = selectedMemo.getNote();
+            String memoPriority = selectedMemo.getPriority();
+            //String memoDate = selectedMemo.getDate();
+            int memoId = selectedMemo.getMemoID();
+
+            // Intent to pass memo details to MainActivity
             Intent intent = new Intent(MemoListActivity.this, MainActivity.class);
             intent.putExtra("memoID", memoId);
+            intent.putExtra("subject", memoSubject);
+            intent.putExtra("note", memoNote);
+            intent.putExtra("priority", memoPriority);
+            //intent.putExtra("date", memoDate);
             startActivity(intent);
         }
     };
