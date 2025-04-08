@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -32,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        if (currentMemo == null) {
+            currentMemo = new Memo(); // Or retrieve an existing memo if needed
+        }
+
         initListButton();
         initSettingsButton();
         initSelectDateButton();
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     public void didFinishDatePickerDialog(Calendar selectedTime) {
         TextView theDate = findViewById(R.id.editDate);
         theDate.setText(DateFormat.format("MM/dd/yyyy", selectedTime));
+        currentMemo.setDate(selectedTime);
     }
 
     private void initSaveButton() {
@@ -98,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             @Override
             public void onClick(View view) {
                 hideKeyboard();
+
+                EditText editSubject = findViewById(R.id.editMemo);
+                EditText editNote = findViewById(R.id.editNote);
+
+                currentMemo.setSubject(editSubject.getText().toString());
+                currentMemo.setNote(editNote.getText().toString());
+                currentMemo.setPriority(getPriority());
+
                 boolean wasSuccessful;
                 MemoDataSource ds = new MemoDataSource(MainActivity.this);
                 try {
@@ -136,5 +151,24 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         EditText editNote = findViewById(R.id.editNote);
         imm.hideSoftInputFromWindow(editNote.getWindowToken(), 0);
 
+    }
+
+    private String getPriority() {
+        // Get the RadioGroup from the layout
+        RadioGroup priorityGroup = findViewById(R.id.radioGroup);
+
+        // Get the selected RadioButton's ID
+        int selectedId = priorityGroup.getCheckedRadioButtonId();
+
+        // Check which RadioButton is selected and return the corresponding priority
+        if (selectedId == R.id.radioButtonHigh) {
+            return "High";
+        } else if (selectedId == R.id.radioButtonMedium) {
+            return "Medium";
+        } else if (selectedId == R.id.radioButtonLow) {
+            return "Low";
+        } else {
+            return "Low"; // Default priority if nothing is selected
+        }
     }
 }

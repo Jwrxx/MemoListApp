@@ -34,9 +34,10 @@ public class MemoDataSource {
 
             initialValues.put("subject", r.getSubject());
             initialValues.put("note", r.getNote());
+            initialValues.put("priority", r.getPriority());
             initialValues.put("date", String.valueOf(r.getDate().getTimeInMillis()));
 
-            didSucceed = database.insert("reminder", null, initialValues) > 0;
+            didSucceed = database.insert("memo", null, initialValues) > 0;
         } catch (Exception e) {
 
         }
@@ -51,6 +52,7 @@ public class MemoDataSource {
 
             updateValues.put("subject", r.getSubject());
             updateValues.put("note", r.getNote());
+            updateValues.put("priority", r.getPriority());
             updateValues.put("date", String.valueOf(r.getDate().getTimeInMillis()));
 
             didSucceed = database.update
@@ -104,6 +106,30 @@ public class MemoDataSource {
             memos = new ArrayList<>();
         }
         return memos;
+    }
+
+    public Memo getMemo(int memoID) {
+        Memo memo = null;
+        try {
+            String query = "SELECT * FROM memo WHERE _id = ?";
+            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(memoID)});
+
+            if (cursor.moveToFirst()) {
+                memo = new Memo();
+                memo.setMemoID(cursor.getInt(0));
+                memo.setSubject(cursor.getString(1));
+                memo.setNote(cursor.getString(2));
+                memo.setPriority(cursor.getString(3));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.parseLong(cursor.getString(4)));
+                memo.setDate(calendar);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            memo = null;
+        }
+        return memo;
     }
 
 }

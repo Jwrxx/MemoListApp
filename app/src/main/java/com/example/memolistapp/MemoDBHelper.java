@@ -7,12 +7,13 @@ import android.util.Log;
 
 public class MemoDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Memo.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //SQL statement
     private static final String CREATE_TABLE_MEMO =
             "create table memo (_id integer primary key autoincrement,"
                     + "subject text not null, note text,"
+                    + "priority text,"
                     + "date text);";
 
     public MemoDBHelper(Context context){
