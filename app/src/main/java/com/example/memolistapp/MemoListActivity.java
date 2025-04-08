@@ -23,7 +23,7 @@ public class MemoListActivity extends AppCompatActivity {
     ArrayList<Memo> memos;
 
     private RecyclerView recyclerView;
-    private ArrayList<Memo> memoList;
+    //private ArrayList<Memo> memoList;
 
     private MemoAdapter memoAdapter;
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
@@ -51,6 +51,10 @@ public class MemoListActivity extends AppCompatActivity {
         }
     };
 
+//    public MemoListActivity(ArrayList<Memo> memoList) {
+//        this.memoList = memoList;
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class MemoListActivity extends AppCompatActivity {
         initSettingsButton();
         initMemoButton();
         initSwipeToDelete();
+
 
         String sortBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
                 .getString("sortMemosBy", "subject");
@@ -103,6 +108,8 @@ public class MemoListActivity extends AppCompatActivity {
 
         //initDeleteSwitch();
         //initDeleteContactButton();
+        //initSwipeToDelete();
+
     }
 
     private void initListButton() {
@@ -153,8 +160,17 @@ public class MemoListActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                MemoDataSource ds = new MemoDataSource(MemoListActivity.this);
+                try {
+                    ds.open();
+                    ds.deleteMemo(memos.get(position).getMemoID());
+                    ds.close();
+                } catch (Exception e) {
+                    Toast.makeText(MemoListActivity.this, "Error deleting memo", Toast.LENGTH_SHORT).show();
+                }
 
-                memoList.remove(position);
+                // notifies adapter after getting rid of the list/ian
+                memos.remove(position);
                 memoAdapter.notifyItemRemoved(position);
             }
         };
