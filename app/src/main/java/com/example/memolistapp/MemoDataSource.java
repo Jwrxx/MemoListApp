@@ -82,7 +82,31 @@ public class MemoDataSource {
     public ArrayList<Memo> getMemos(String sortBy, String sortOrder){
         ArrayList<Memo> memos = new ArrayList<>();
         try {
-            String query = "SELECT * FROM memo ORDER BY "+ sortBy + " " + sortOrder;
+
+            String orderBy;
+            if (sortBy.equals("priority")) {
+                // Ascending order: High > Medium > Low
+                if (sortOrder.equals("ascending")) {
+                    orderBy = "CASE priority " +
+                            "WHEN 'High' THEN 1 " +
+                            "WHEN 'Medium' THEN 2 " +
+                            "WHEN 'Low' THEN 3 " +
+                            "END ASC";
+                }
+                // Descending order: Low > Medium > High
+                else {
+                    orderBy = "CASE priority " +
+                            "WHEN 'Low' THEN 1 " +
+                            "WHEN 'Medium' THEN 2 " +
+                            "WHEN 'High' THEN 3 " +
+                            "END DESC"; // Always ASC to make it reverse in terms of Low, Medium, High
+                }
+            } else {
+                orderBy = sortBy + " " + sortOrder;  // Default sorting by other fields (e.g., date, subject)
+            }
+
+            //String query = "SELECT * FROM memo ORDER BY "+ sortBy + " " + sortOrder;
+            String query = "SELECT * FROM memo ORDER BY " + orderBy;
             Cursor cursor = database.rawQuery(query, null);
 
             Memo newMemo;
