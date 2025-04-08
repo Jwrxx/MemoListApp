@@ -117,7 +117,7 @@ public class MemoSettingsActivity extends AppCompatActivity {
                 if (checkedId == R.id.radioAscending) {
                     sortOrder = "ascending";
                 } else {
-                    sortOrder = "descending"; 
+                    sortOrder = "descending";
                 }
 
                 getSharedPreferences("MemoSettings", Context.MODE_PRIVATE).edit()

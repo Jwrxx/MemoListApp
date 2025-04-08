@@ -16,7 +16,7 @@
         android:background="@android:color/transparent"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:text="@string/newmemo"
+        android:text="Add A New Memo"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
