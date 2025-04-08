@@ -79,7 +79,7 @@ public class MemoListActivity extends AppCompatActivity {
             memoList.setAdapter(memoAdapter);
 
         } catch (Exception e) {
-            Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
         }
 
         //initDeleteSwitch();
