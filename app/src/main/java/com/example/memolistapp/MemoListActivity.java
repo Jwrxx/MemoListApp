@@ -36,7 +36,6 @@ public class MemoListActivity extends AppCompatActivity {
             //MemoID to main
             Intent intent = new Intent(MemoListActivity.this, MainActivity.class);
             intent.putExtra("memoID", memoId);
-            //add Email here?
             startActivity(intent);
         }
     };

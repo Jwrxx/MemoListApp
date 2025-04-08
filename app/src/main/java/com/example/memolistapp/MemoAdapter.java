@@ -53,7 +53,19 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MemoViewHolder
         holder.textSubject.setText(currentMemo.getSubject());
         holder.textNote.setText(currentMemo.getNote());
         holder.textPriority.setText(currentMemo.getPriority());
-        //holder for get date needed
+        //need holder for date
+
+        String priority = currentMemo.getPriority();
+
+        if (priority.equalsIgnoreCase("high")) {
+            holder.textPriority.setBackgroundColor(context.getResources().getColor(R.color.priorityHigh)); // Red
+        } else if (priority.equalsIgnoreCase("medium")) {
+            holder.textPriority.setBackgroundColor(context.getResources().getColor(R.color.priorityMedium)); // Yellow
+        } else if (priority.equalsIgnoreCase("low")) {
+            holder.textPriority.setBackgroundColor(context.getResources().getColor(R.color.priorityLow)); // Green
+        } else {
+
+        }
     }
 
     @Override
