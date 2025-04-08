@@ -1,10 +1,12 @@
 package com.example.memolistapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +24,7 @@ public class MemoSettingsActivity extends AppCompatActivity {
         initListButton();
         initSettingsButton();
         initMemoSettings();
-
+        initSortByClick();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -56,8 +58,10 @@ public class MemoSettingsActivity extends AppCompatActivity {
 
     private void initMemoSettings() {
 
-        String sortMemosBy = getSharedPreferences("MemoSettings", MODE_PRIVATE).getString("sortMemosBy", "priority");
-        String sortOrder = getSharedPreferences("MemoSettings", MODE_PRIVATE).getString("sortOrder", "ascending");
+        String sortMemosBy = getSharedPreferences("MemoSettings", MODE_PRIVATE)
+                .getString("sortMemosBy", "priority");
+        String sortOrder = getSharedPreferences("MemoSettings", MODE_PRIVATE)
+                .getString("sortOrder", "ascending");
 
         RadioButton radioButtonPriority = findViewById(R.id.radioButtonPriority);
         RadioButton radioButtonDate = findViewById(R.id.radioButtonDate);
@@ -79,5 +83,26 @@ public class MemoSettingsActivity extends AppCompatActivity {
         } else {
             radioDescending.setChecked(true);
         }
+    }
+
+    private void initSortByClick() {
+        RadioGroup rgSortBy = findViewById(R.id.radioGroupSortBy);
+        rgSortBy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                String sortField;
+                if (checkedId == R.id.radioButtonPriority) {
+                    sortField = "priority";
+                } else if (checkedId == R.id.radioButtonDate) {
+                    sortField = "date";
+                } else {
+                    sortField = "subject";
+                }
+
+                getSharedPreferences("MemoPreferences", Context.MODE_PRIVATE).edit()
+                        .putString("sortfield", sortField)
+                        .apply();
+            }
+        });
     }
 }
