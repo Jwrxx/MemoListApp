@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MemoDataSource {
     //pushTest
@@ -73,6 +75,35 @@ public class MemoDataSource {
             lastId = -1;
         }
         return lastId;
+    }
+
+    public ArrayList<Memo> getMemos(String sortBy, String sortOrder){
+        ArrayList<Memo> memos = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM memo ORDER BY "+ sortBy + " " + sortOrder;
+            Cursor cursor = database.rawQuery(query, null);
+
+            Memo newMemo;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newMemo = new Memo();
+                newMemo.setMemoID(cursor.getInt(0));
+                newMemo.setSubject(cursor.getString(1));
+                newMemo.setNote(cursor.getString(2));
+                newMemo.setPriority(cursor.getString(3));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.parseLong(cursor.getString(4)));
+                newMemo.setDate(calendar);
+
+                memos.add(newMemo);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        } catch (Exception e) {
+            memos = new ArrayList<>();
+        }
+        return memos;
     }
 
 }

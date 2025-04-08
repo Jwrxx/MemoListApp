@@ -1,10 +1,12 @@
 package com.example.memolistapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +14,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MemoListActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class MemoListActivity extends AppCompatActivity {
+    ArrayList<Memo> memos;
+
+    private RecyclerView recyclerView;
+    private ArrayList<Memo> memoList;
+
+    private MemoAdapter memoAdapter;
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+            int position = viewHolder.getAdapterPosition();
+            int memoId = memos.get(position).getMemoID();
+
+            //MemoID to main
+            Intent intent = new Intent(MemoListActivity.this, MainActivity.class);
+            intent.putExtra("memoID", memoId);
+            //add Email here?
+            startActivity(intent);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +51,40 @@ public class MemoListActivity extends AppCompatActivity {
         //initSwipeToDelete();
 
         //setContentView(R.layout.activity_list);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//            });
+        String sortBy = getSharedPreferences("MyMemoListListPreferences",
+                Context.MODE_PRIVATE).getString("sortfield", "subject");
+        String sortOrder = getSharedPreferences("MyMemoListPreferences",
+                Context.MODE_PRIVATE).getString("sortorder", "ASC");
+
+        //get data
+        MemoDataSource ds = new MemoDataSource(this);
+
+        try {
+            ds.open();
+            memos = ds.getMemos(sortBy, sortOrder); //object
+            ds.close();
+
+            //recycler
+            RecyclerView memoList = findViewById(R.id.rvMemoList);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            memoList.setLayoutManager(layoutManager);
+
+
+            memoAdapter = new MemoAdapter(memos, this);
+            memoAdapter.setOnItemClickListener(onItemClickListener);
+            memoList.setAdapter(memoAdapter);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
+        }
+
+        //initDeleteSwitch();
+        //initDeleteContactButton();
     }
 
     private void initListButton() {
@@ -69,6 +122,7 @@ public class MemoListActivity extends AppCompatActivity {
             }
         });
     }
+
 }
 
     /*private void initSwipeToDelete(){
