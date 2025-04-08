@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         initListButton();
         initSettingsButton();
         initSelectDateButton();
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 MemoDataSource ds = new MemoDataSource(MainActivity.this);
                 try {
                     ds.open();
+
                     if (currentMemo.getMemoID() == -1) {
                         wasSuccessful = ds.insertMemo(currentMemo);
 
