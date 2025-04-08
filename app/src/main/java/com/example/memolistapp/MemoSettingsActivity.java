@@ -60,9 +60,9 @@ public class MemoSettingsActivity extends AppCompatActivity {
 
     private void initMemoSettings() {
 
-        String sortMemosBy = getSharedPreferences("MemoSettings", MODE_PRIVATE)
+        String sortMemosBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
                 .getString("sortMemosBy", "priority");
-        String sortOrder = getSharedPreferences("MemoSettings", MODE_PRIVATE)
+        String sortOrder = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
                 .getString("sortOrder", "ascending");
 
         RadioButton radioButtonPriority = findViewById(R.id.radioButtonPriority);
@@ -102,7 +102,7 @@ public class MemoSettingsActivity extends AppCompatActivity {
                 }
 
                 getSharedPreferences("MemoPreferences", Context.MODE_PRIVATE).edit()
-                        .putString("sortfield", sortField)
+                        .putString("sortMemosBy", sortField)
                         .apply();
             }
         });
@@ -120,7 +120,7 @@ public class MemoSettingsActivity extends AppCompatActivity {
                     sortOrder = "descending";
                 }
 
-                getSharedPreferences("MemoSettings", Context.MODE_PRIVATE).edit()
+                getSharedPreferences("MemoPreferences", Context.MODE_PRIVATE).edit()
                         .putString("sortOrder", sortOrder)
                         .apply();
             }

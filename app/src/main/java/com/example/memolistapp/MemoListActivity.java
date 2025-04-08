@@ -61,16 +61,23 @@ public class MemoListActivity extends AppCompatActivity {
         initMemoButton();
         initSwipeToDelete();
 
+        String sortBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+                .getString("sortMemosBy", "subject");
+        String sortOrderPref = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+                .getString("sortOrder", "ascending");
+
+        String sortOrder = sortOrderPref.equals("descending") ? "DESC" : "ASC";
+
         //setContentView(R.layout.activity_list);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //            });
-        String sortBy = getSharedPreferences("MyMemoListListPreferences",
+        /*String sortBy = getSharedPreferences("MyMemoListListPreferences",
                 Context.MODE_PRIVATE).getString("sortfield", "subject");
         String sortOrder = getSharedPreferences("MyMemoListPreferences",
-                Context.MODE_PRIVATE).getString("sortorder", "ASC");
+                Context.MODE_PRIVATE).getString("sortorder", "ASC");*/
 
         //get data
         MemoDataSource ds = new MemoDataSource(this);
