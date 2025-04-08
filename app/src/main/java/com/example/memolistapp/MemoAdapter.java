@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MemoViewHolder> {
 
@@ -53,6 +55,9 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.MemoViewHolder
         holder.textSubject.setText(currentMemo.getSubject());
         holder.textNote.setText(currentMemo.getNote());
         holder.textPriority.setText(currentMemo.getPriority());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String formattedDate = sdf.format(currentMemo.getDate().getTime());
+        holder.textDate.setText(formattedDate);
         //need holder for date
 
         String priority = currentMemo.getPriority();

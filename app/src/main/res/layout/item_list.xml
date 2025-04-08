@@ -39,7 +39,7 @@
         android:layout_width="180dp"
         android:layout_height="52dp"
         android:layout_marginStart="24dp"
-        android:text="Content..."
+        android:hint="Content..."
         android:maxLines="1"
         android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,14 +58,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSubject" />
 
-    <EditText
+    <TextView
         android:id="@+id/editDate"
         android:layout_width="143dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:inputType="date"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textDate" />
