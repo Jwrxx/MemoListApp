@@ -25,6 +25,8 @@ public class MemoSettingsActivity extends AppCompatActivity {
         initSettingsButton();
         initMemoSettings();
         initSortByClick();
+        initSortOrderClick();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -101,6 +103,25 @@ public class MemoSettingsActivity extends AppCompatActivity {
 
                 getSharedPreferences("MemoPreferences", Context.MODE_PRIVATE).edit()
                         .putString("sortfield", sortField)
+                        .apply();
+            }
+        });
+    }
+
+    private void initSortOrderClick() {
+        RadioGroup rgSortOrder = findViewById(R.id.radioGroupSortOrder);
+        rgSortOrder.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                String sortOrder;
+                if (checkedId == R.id.radioAscending) {
+                    sortOrder = "ascending";
+                } else {
+                    sortOrder = "descending"; 
+                }
+
+                getSharedPreferences("MemoSettings", Context.MODE_PRIVATE).edit()
+                        .putString("sortOrder", sortOrder)
                         .apply();
             }
         });
