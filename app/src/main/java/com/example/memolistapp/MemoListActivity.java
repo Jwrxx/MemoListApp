@@ -47,7 +47,7 @@ public class MemoListActivity extends AppCompatActivity {
         initListButton();
         initSettingsButton();
         initMemoButton();
-        //initSwipeToDelete();
+        initSwipeToDelete();
 
         //setContentView(R.layout.activity_list);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -122,27 +122,25 @@ public class MemoListActivity extends AppCompatActivity {
         });
     }
 
-}
-
-    /*private void initSwipeToDelete(){
-        RecyclerView recyclerView = findViewById(R.id.rvMemoList); // replace with your ID
+    private void initSwipeToDelete(){
+        RecyclerView recyclerView = findViewById(R.id.rvMemoList);
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false; // we don't want drag & drop
+                return false;
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                // remove the item from your list and notify adapter
-                memoList.remove(position); // memoList is your ArrayList
-                adapter.notifyItemRemoved(position); // adapter is your RecyclerView adapter
+
+                memoList.remove(position);
+                memoAdapter.notifyItemRemoved(position);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-}*/
+}
