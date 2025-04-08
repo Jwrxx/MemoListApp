@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-// DATABASE DOESNT SAVE ANYMORE, WRONG COMMIT MERGE AND REBASE
+
 public class MemoDataSource {
     //pushTest
     private SQLiteDatabase database;
@@ -130,6 +130,16 @@ public class MemoDataSource {
             memo = null;
         }
         return memo;
+    }
+
+    public boolean deleteMemo(int memoID) {
+        boolean didSucceed = false;
+        try {
+            didSucceed = database.delete("memo", "_id = ?", new String[]{String.valueOf(memoID)}) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return didSucceed;
     }
 
 }

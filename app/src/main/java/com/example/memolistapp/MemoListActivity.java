@@ -50,6 +50,7 @@ public class MemoListActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,10 +124,10 @@ public class MemoListActivity extends AppCompatActivity {
 
     private void initMemoButton() {
         Button newMemo = findViewById(R.id.newMemoButton);
-        newMemo.setOnClickListener(new View.OnClickListener(){
+        newMemo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MemoListActivity.this,MainActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(MemoListActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
