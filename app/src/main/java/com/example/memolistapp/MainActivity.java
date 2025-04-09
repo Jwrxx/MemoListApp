@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         });
 //        initListButton();
 //        initSettingsButton();
+        setForEditing(true);
     }
 
     private void initListButton() {
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 // Provide feedback to the user
                 if (wasSuccessful) {
                     Toast.makeText(MainActivity.this, "Memo saved successfully!", Toast.LENGTH_SHORT).show();
+                    setForEditing(false);
                 } else {
                     Toast.makeText(MainActivity.this, "Failed to save memo.", Toast.LENGTH_SHORT).show();
                 }
@@ -187,4 +189,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
             return "Low"; // Default priority if nothing is selected
         }
     }
-}
+        private void setForEditing(boolean enabled) {
+            EditText editSubject = findViewById(R.id.editMemo);
+            EditText editNote = findViewById(R.id.editNote);
+            Button buttonSave = findViewById(R.id.buttonSave);
+
+            editSubject.setEnabled(enabled);
+            editNote.setEnabled(enabled);
+
+            buttonSave.setEnabled(enabled);
+
+        }
+    }

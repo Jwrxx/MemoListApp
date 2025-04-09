@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MemoListActivity extends AppCompatActivity {
     ArrayList<Memo> memos;
@@ -34,10 +36,11 @@ public class MemoListActivity extends AppCompatActivity {
             Memo selectedMemo = memos.get(position);
 
             // Get details of the selected memo
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String memoSubject = selectedMemo.getSubject();
             String memoNote = selectedMemo.getNote();
             String memoPriority = selectedMemo.getPriority();
-            //String memoDate = selectedMemo.getDate();
+            String memoDate = sdf.format(selectedMemo.getDate().getTime());
             int memoId = selectedMemo.getMemoID();
 
             // Intent to pass memo details to MainActivity
@@ -46,7 +49,7 @@ public class MemoListActivity extends AppCompatActivity {
             intent.putExtra("subject", memoSubject);
             intent.putExtra("note", memoNote);
             intent.putExtra("priority", memoPriority);
-            //intent.putExtra("date", memoDate);
+            intent.putExtra("date", memoDate);
             startActivity(intent);
         }
     };
