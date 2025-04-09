@@ -195,16 +195,25 @@ public class MemoListActivity extends AppCompatActivity {
         MemoDataSource ds = new MemoDataSource(this);
         try {
             ds.open();
-            memos = ds.searchMemos(query); // Use a new method in MemoDataSource for search
+            memos = ds.searchMemos(query);
             ds.close();
 
-//            setupRecyclerView();
+           setupRecyclerView(memos);
 
             if (memos.isEmpty()) {
                 Toast.makeText(this, "No memos found", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error searching memos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error searching for memos", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void setupRecyclerView(ArrayList<Memo> memos) {
+        RecyclerView memoList = findViewById(R.id.rvMemoList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        memoList.setLayoutManager(layoutManager);
+
+        memoAdapter = new MemoAdapter(memos, this);
+        memoAdapter.setOnItemClickListener(onItemClickListener);
+        memoList.setAdapter(memoAdapter);
     }
 }

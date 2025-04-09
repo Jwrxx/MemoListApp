@@ -146,5 +146,7 @@ public class MemoSettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 }
