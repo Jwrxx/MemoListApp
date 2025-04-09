@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -165,6 +166,32 @@ public class MemoDataSource{
             e.printStackTrace();
         }
         return didSucceed;
+    }
+    public ArrayList<Memo> searchMemos(String query) {
+        ArrayList<Memo> searchResults = new ArrayList<>();
+        try {
+            String sqlQuery = "SELECT * FROM memo WHERE subject LIKE ? OR note LIKE ?";
+            String[] args = {"%" + query + "%", "%" + query + "%"};
+            Cursor cursor = database.rawQuery(sqlQuery, args);
+
+            while (cursor.moveToNext()) {
+                Memo memo = new Memo();
+                memo.setMemoID(cursor.getInt(0));
+                memo.setSubject(cursor.getString(1));
+                memo.setNote(cursor.getString(2));
+                memo.setPriority(cursor.getString(3));
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.parseLong(cursor.getString(4)));
+                memo.setDate(calendar);
+
+                searchResults.add(memo);
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return searchResults;
     }
 
 

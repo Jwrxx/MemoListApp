@@ -64,14 +64,28 @@ public class MemoListActivity extends AppCompatActivity {
         initSettingsButton();
         initMemoButton();
         initSwipeToDelete();
+        // Check if there's a search query
+        Intent intent = getIntent();
+        String searchQuery = intent.getStringExtra("SEARCH_QUERY");
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            searchMemos(searchQuery); // Filter the list based on the search query
+        } else {
+            String sortBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+                    .getString("sortMemosBy", "subject");
+            String sortOrderPref = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+                    .getString("sortOrder", "ascending");
+
+            String sortOrder = sortOrderPref.equals("descending") ? "DESC" : "ASC";
 
 
-        String sortBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
-                .getString("sortMemosBy", "subject");
-        String sortOrderPref = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
-                .getString("sortOrder", "ascending");
 
-        String sortOrder = sortOrderPref.equals("descending") ? "DESC" : "ASC";
+//    String sortBy = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+//            .getString("sortMemosBy", "subject");
+//    String sortOrderPref = getSharedPreferences("MemoPreferences", MODE_PRIVATE)
+//            .getString("sortOrder", "ascending");
+//
+//    String sortOrder = sortOrderPref.equals("descending") ? "DESC" : "ASC";
 
         //setContentView(R.layout.activity_list);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -104,14 +118,13 @@ public class MemoListActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(this, "Error retrieving memos", Toast.LENGTH_LONG).show();
-        }
+        }}
 
         //initDeleteSwitch();
         //initDeleteContactButton();
         //initSwipeToDelete();
 
     }
-
     private void initListButton() {
         ImageButton listButton = findViewById(R.id.imageButtonList);
         listButton.setOnClickListener(new View.OnClickListener() {
@@ -177,5 +190,21 @@ public class MemoListActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+    private void searchMemos(String query) {
+        MemoDataSource ds = new MemoDataSource(this);
+        try {
+            ds.open();
+            memos = ds.searchMemos(query); // Use a new method in MemoDataSource for search
+            ds.close();
+
+//            setupRecyclerView();
+
+            if (memos.isEmpty()) {
+                Toast.makeText(this, "No memos found", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Error searching memos", Toast.LENGTH_SHORT).show();
+        }
     }
 }
