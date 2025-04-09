@@ -33,8 +33,10 @@ public class MemoListActivity extends AppCompatActivity {
         public void onClick(View view) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
-            Memo selectedMemo = memos.get(position);
+            //Memo selectedMemo = memos.get(position);
 
+            if (position != RecyclerView.NO_POSITION) { // Ensure valid position
+                Memo selectedMemo = memos.get(position);
             // Get details of the selected memo
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             String memoSubject = selectedMemo.getSubject();
@@ -51,6 +53,7 @@ public class MemoListActivity extends AppCompatActivity {
             intent.putExtra("priority", memoPriority);
             intent.putExtra("date", memoDate);
             startActivity(intent);
+        }
         }
     };
 

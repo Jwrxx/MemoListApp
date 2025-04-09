@@ -36,10 +36,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
 
         Intent intent = getIntent();
+        int memoID = intent.getIntExtra("memoID", -1);
         String subject = intent.getStringExtra("subject");
         String note = intent.getStringExtra("note");
         String priority = intent.getStringExtra("priority");
-        String date = intent.getStringExtra("date");
+        long dateInMillis = intent.getLongExtra("date", -1);
 
 
         EditText subjectEditText = findViewById(R.id.editMemo);
@@ -49,10 +50,40 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         subjectEditText.setText(subject);
         noteEditText.setText(note);
+        if (memoID != -1) {
+            currentMemo = new Memo();
+            currentMemo.setMemoID(memoID);
+            currentMemo.setSubject(subject);
+            currentMemo.setNote(note);
+            currentMemo.setPriority(priority);
 
-        if (currentMemo == null) {
-            currentMemo = new Memo(); // Or retrieve an existing memo if needed
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(dateInMillis);
+            currentMemo.setDate(calendar);
+
+            subjectEditText.setText(subject);
+            noteEditText.setText(note);
+            dateTextView.setText(DateFormat.format("MM/dd/yyyy", calendar));
+
+            if (priority != null) {
+                if (priority.equals("High")) {
+                    priorityRadioGroup.check(R.id.radioButtonHigh);
+                } else if (priority.equals("Medium")) {
+                    priorityRadioGroup.check(R.id.radioButtonMedium);
+                } else if (priority.equals("Low")) {
+                    priorityRadioGroup.check(R.id.radioButtonLow);
+                }
+            }
+        } else {
+            currentMemo = new Memo(); // New memo
         }
+
+        initSaveButton();
+
+
+//        if (currentMemo == null) {
+//            currentMemo = new Memo(); // Or retrieve an existing memo if needed
+//        }
 
         initListButton();
         initSettingsButton();
@@ -151,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 // Provide feedback to the user
                 if (wasSuccessful) {
                     Toast.makeText(MainActivity.this, "Memo saved successfully!", Toast.LENGTH_SHORT).show();
-                    setForEditing(false);
+                    //setForEditing(false);
                 } else {
                     Toast.makeText(MainActivity.this, "Failed to save memo.", Toast.LENGTH_SHORT).show();
                 }
